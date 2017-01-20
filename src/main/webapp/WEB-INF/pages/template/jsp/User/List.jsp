@@ -5,11 +5,25 @@
 <div data-ng-controller="userController" data-ng-init="userList()">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<ol class="breadcrumb">
-				<li><a data-ng-href="<c:url value="/User/home"/>">Home</a></li>
-				<li class="active">User List</li>
-			</ol>
+			<!-- 			<ol class="breadcrumb"> -->
+			<%-- 				<li><a data-ng-href="<c:url value="/User/home"/>">Home</a></li> --%>
+			<!-- 				<li class="active">User List</li> -->
+			<!-- 			</ol> -->
+			<div class="form-group">
+				<div class="col-sm-3">
+					<input type="text" class="form-control input-group-lg reg_name"
+						data-ng-value="" data-ng-model="name"
+						name="name" >
+				</div>
+				<div class="col-sm-3">
+					<button class="btn btn-info"
+						data-ng-click="findUserRepeat(name)">Search</button>
+						
+				</div>
+			</div>
+
 		</div>
+		<br />
 		<div class="panel-body">
 			<table class="table">
 				<thead>

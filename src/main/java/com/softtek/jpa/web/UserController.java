@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softtek.jpa.domain.User;
 import com.softtek.jpa.domain.UserRole;
@@ -71,7 +69,6 @@ public class UserController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ResponseEntity<?> editUser(@RequestBody  String username) {
-		
 		User user = userService.user(username);
 		List<UserRole> userRoleList = userRoleService.userRoleList();
 		List<String> listStatus = userRoleService.statusList();
@@ -134,4 +131,15 @@ public class UserController {
 		 }
 		 return "redirect:/User/addView";
 	 }
+	 
+	 @RequestMapping(value="/find" ,method=RequestMethod.POST)
+	 public ResponseEntity<?> findUser(@RequestBody String name ) {
+		 List<User> users = userService.findUser(name);
+		 if(users.size()>1){
+				return new ResponseEntity<List<User>>(HttpStatus.CONFLICT);//You many decide to return HttpStatus.NOT_FOUND
+			}
+			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	 }
+	 
+	 
 }

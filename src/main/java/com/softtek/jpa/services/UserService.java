@@ -11,5 +11,6 @@ public interface UserService {
 	public boolean update(User user);
 	public boolean newUser(User user);
 	public boolean deleteUser(User user);
+	public List<User> findUser(String name);
 
 }

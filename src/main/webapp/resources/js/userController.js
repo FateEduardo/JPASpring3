@@ -5,6 +5,7 @@ MyApp.controller('userController', function($scope,userService,$cookieStore) {
 	$scope.listStatus = {};
 
 	$scope.userList=function(){
+	
 		userService.userList()
 		.then(
 				function(d) {
@@ -55,6 +56,21 @@ MyApp.controller('userController', function($scope,userService,$cookieStore) {
 				}
 		);
 	}
+	
+	$scope.findUserRepeat=function(){
+		
+		userService.findUserRepeat($scope.name)
+		.then(
+				function(d) {
+					$scope.userList = angular.copy(d);
+					console.log($scope.userList)
+				},
+				function(errResponse){
+					console.error('Error while fetching Users');
+					alert("Error 409")
+				}
+		);
+	}
 
 	$scope.newUser=function(){
 		userService.newUser($scope.user)
@@ -63,7 +79,10 @@ MyApp.controller('userController', function($scope,userService,$cookieStore) {
 	$scope.deleteUser=function(username){
 		userService.deleteUser(username)
 	}
+
 });
+
+/////
 MyApp.factory('userService',function($http,$q,$window){
 	var service={
 			userList:userList,
@@ -71,7 +90,8 @@ MyApp.factory('userService',function($http,$q,$window){
 			newUser:newUser,
 			findUser:findUser,
 			dataUser:dataUser,
-			deleteUser:deleteUser
+			deleteUser:deleteUser,
+			findUserRepeat:findUserRepeat
 
 	};
 	var URL='http://localhost:8080/jpaproject/User'
@@ -84,6 +104,24 @@ MyApp.factory('userService',function($http,$q,$window){
 				},
 				function(errResponse){
 					console.error(errResponse);
+					deferred.reject(errResponse);
+				}
+		);
+		return deferred.promise;
+	}
+	
+	
+	function findUserRepeat(name){
+		console.log(name)
+		var deferred = $q.defer();
+		$http.post(URL+'/find',name)
+		.then(
+				function (response) {
+					deferred.resolve(response.data);
+
+				},
+				function(errResponse){
+					console.error('Error while fetching Users');
 					deferred.reject(errResponse);
 				}
 		);

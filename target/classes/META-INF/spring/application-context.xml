@@ -41,8 +41,8 @@
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/ecomDB" />
-		<property name="username" value="Eescalona" />
-		<property name="password" value="Eescalona" />
+		<property name="username" value="Esanchez" />
+		<property name="password" value="Esanchez" />
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="transactionManager" />
